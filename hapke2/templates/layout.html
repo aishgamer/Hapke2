@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hapke Forward</title>
+    <link rel="stylesheet" type="text/css" href="/static/content/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/content/site.css" />
+    <link href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="/static/scripts/modernizr-2.6.2.js"></script>
+</head>
+
+<body>
+    <div class="container body-content">
+        <div class='row'>
+            <h2>Hapke Forward</h2>
+            <div class='col-md-10'>
+                {% block content %}{% endblock %}
+            </div>
+            <div class='col-md-4'>
+                <div id='workspace' class="sidebar-header text-center">
+                    <h4>Workspace</h4>
+                    <div class="container">
+                        <table id="wstable" data-toggle="table">
+                            <thead>
+                                <tr>
+                                    <th data-field="var">Var</th>
+                                    <th data-field="value">Value</th>
+                                    <th data-field="min">Min</th>
+                                    <th data-field="max">Max</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <footer>
+            <p>&copy; 2021 - Hapke Forward</p>
+        </footer>
+    </div>
+
+    <script src="/static/scripts/jquery-3.6.0.min.js"></script>
+    <script src="/static/scripts/bootstrap.js"></script>
+    <script src="/static/scripts/respond.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
+    {% block scripts %}{% endblock %}
+
+</body>
+</html>

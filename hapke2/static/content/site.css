@@ -1,0 +1,105 @@
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    overflow-y: hidden;
+    margin: 0 auto;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+}
+
+#sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 999;
+    background: #f7f7f7;
+    color: #114084; /* Primary Color*/
+    padding: 0.3em;
+}
+
+#workspace {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    z-index: 999;
+    background: #f7f7f7;
+    color: #114084; /* Primary Color*/
+    padding: 0.3em;
+}
+
+.nav_link:link,
+.nav_link:visited,
+.nav_link:hover,
+.nav_link:active {
+    text-decoration: none;
+    color: #595959;
+    font-size: 0.8em;
+    font-weight:bold !important;
+}
+
+.btn-hhanh-primary:hover {
+    opacity: 0.9;
+    color: #fff;
+}
+
+.btn-hhanh-primary {
+    background-color: #114084 !important; /* Primary Color*/
+    color: #fff;
+    font-weight:600;
+}
+
+.form-control-inline {
+    min-width: 0;
+    width: auto;
+    display: inline;
+}
+
+label{
+    font-size:0.8em !important;
+}
+
+.fixed-table-loading{display:none !important;}
+#wstable,#dqtable{font-size:0.6em; display:none}

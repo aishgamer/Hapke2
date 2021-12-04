@@ -1,0 +1,146 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="row card my-2" id="section_input">
+    <h5 class="card-header">Input</h5>
+    <div class="card-body text-center">
+        <div id="input_results" class="my-4"></div>
+        <div id="input_message" class="my-4 text-left"></div>
+        <div class="input_dq_results my-4">
+            <table id="dqtable" data-toggle="table">
+                <thead>
+                    <tr>
+                        <th data-field="dp">Category</th>
+                        <th data-field="rslt">Result</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <form id="upload-file">
+            <label class="form-label form-control-label" for="customFile">Select input file:</label>
+            <input name="customFile" class="form-control form-control-sm d-inline" id="input_file" type="file">
+            <div class="btn btn-sm btn-hhanh-primary" id="input_submit">Upload</div>
+        </form>
+    </div>
+</div>
+
+<div class="row card my-2" id="section_pp">
+    <h5 class="card-header">Preprocess</h5>
+    <div class="card-body text-center">
+        <form id="pp_form">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="form-group row">
+                            <label for="crop" class="col-sm-5"> Crop: </label>
+                            <div class="col-sm-5">
+                                <input type="checkbox" class="form-check-input" id="pp_crop" name="crop" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="dwnsmpl" class="col-sm-5"> Downsample:</label>
+                            <div class="col-sm-5">
+                                <input type="checkbox" class="form-check-input" id="pp_dwnsmpl" name="dwnsmpl" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="smooth" class="col-sm-5">Smooth:</label>
+                            <div class="col-sm-5">
+                                <input type="checkbox" class="form-check-input" id="pp_smooth" name="smooth" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="form-group row">
+                            <label for="pp_crop_min_input" class="col-sm-6 col-form-label">New minimum:</label>
+                            <div class="col-sm-4">
+                                <input class="form-control form-control-sm d-inline" type="number" id="pp_crop_min_input" name="pp_crop_min_input">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="pp_crop_max_input" class="col-sm-6 col-form-label">New maximum:</label>
+                            <div class="col-sm-4">
+                                <input class="form-control form-control-sm d-inline" type="number" id="pp_crop_max_input" name="pp_crop_max_input">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="pp_dwnsmpl_input" class="col-sm-6 col-form-label"># of Points:</label>
+                            <div class="col-sm-4">
+                                <input class="form-control form-control-sm d-inline" type="number" id="pp_dwnsmpl_input" name="pp_dwnsmpl_input" min="100">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="btn btn-sm btn-hhanh-primary my-4" id="pp_submit">Preprocess</div>
+        <div id="input_results" class="my-4"></div>
+    </div>
+</div>
+
+<div class="row card my-2" id="section_fn">
+    <h5 class="card-header">Function</h5>
+    <div class="card-body">
+        <div>Hapke Model</div>
+        <form id="pp_form">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="form-group row">
+                            <label for="hpk_bs0" class="col-sm-6 col-form-label">Shadow Hiding (Bs0):</label>
+                            <div class="col-sm-4">
+                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_bs0_low" name="hpk_bs0_low" min=1>
+                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_bs0_high" name="hpk_bs0_high" min=1>
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="hpk_bc0" class="col-sm-6 col-form-label">Coherence (Bc0):</label>
+                            <div class="col-sm-4">
+                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_bc0_low" name="hpk_bc0_low" min=1>
+                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_bc0_high" name="hpk_bc0_high" min=1>
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="hpk_theta" class="col-sm-6 col-form-label">Surface Roughness:</label>
+                            <div class="col-sm-4">
+                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_theta_low" name="hpk_theta_low" min="1">
+                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_theta_high" name="hpk_theta_high" min="1">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="form-group row">
+                            <label class="col-sm-6 col-form-label" for="hpk_pg">P(g)</label>
+                            <div class="col-sm-4">
+                                <select class="custom-select" id="hpk_pg">
+                                    <option selected>Choose...</option>
+                                    <option value="1">1</option>
+                                    <option value="hg">H(g)</option>
+                                    <option value="leg">Legendre</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="hpk_ff" class="col-sm-6 col-form-label">Filling Factor:</label>
+                            <div class="col-sm-4">
+                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_ff" name="hpk_ff" min=1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </form>
+        <div class="btn btn-sm btn-hhanh-primary my-4" id="hpk_submit">Run Hapke</div>
+        <div id="hpk_results" class="my-4"></div>
+    </div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script src="/static/scripts/asynchandler.js"></script>
+{% endblock %}
