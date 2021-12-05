@@ -102,4 +102,4 @@ label{
 }
 
 .fixed-table-loading{display:none !important;}
-#wstable,#dqtable{font-size:0.6em; display:none}
+#wstable,.dqtable{font-size:0.6em; display:none}

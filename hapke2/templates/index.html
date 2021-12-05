@@ -8,7 +8,7 @@
         <div id="input_results" class="my-4"></div>
         <div id="input_message" class="my-4 text-left"></div>
         <div class="input_dq_results my-4">
-            <table id="dqtable" data-toggle="table">
+            <table id="dqtable" class="dqtable" data-toggle="table">
                 <thead>
                     <tr>
                         <th data-field="dp">Category</th>
@@ -78,7 +78,18 @@
             </div>
         </form>
         <div class="btn btn-sm btn-hhanh-primary my-4" id="pp_submit">Preprocess</div>
-        <div id="input_results" class="my-4"></div>
+        <div id="pp_results" class="my-4"></div>
+        <div id="pp_message" class="my-4 text-left"></div>
+        <div class="input_dq_results my-4">
+            <table id="pp_dqtable" class="dqtable" data-toggle="table">
+                <thead>
+                    <tr>
+                        <th data-field="dp">Category</th>
+                        <th data-field="rslt">Result</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -142,5 +153,5 @@
 
 {% endblock %}
 {% block scripts %}
-<script src="/static/scripts/asynchandler.js"></script>
+<script src="/static/custom/asynchandler.js"></script>
 {% endblock %}

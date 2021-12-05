@@ -34,7 +34,7 @@ $(document).ready(function () {
                 $('#pp_crop_max_input').attr({ 'min': data.min_wave + 100, 'max': data.max_wave })
                 var msg = 
                 'Data Quality - All:'+ data.dq_str + '.'
-                $('#input_message').html(msg).wrap('<pre />');
+                $('#input_message').html(msg);
             },
         });
     });
@@ -50,11 +50,16 @@ $(document).ready(function () {
             cache: false,
             processData: false,
             success: function (data) {
-                console.log('Success!');
-                console.log(data);
-                $('#input_results').empty().append(data.img);
+                $('#pp_results').empty().append(data.img);
                 $('#wstable').bootstrapTable('removeAll');
                 $('#wstable').bootstrapTable('load', data.wsdata).show();
+                
+                $('#pp_dqtable').bootstrapTable('removeAll');
+                $('#pp_dqtable').bootstrapTable('load', data.dq_results).show();
+
+                var msg = 
+                'Data Quality - All:'+ data.dq_str + '.'
+                $('#pp_message').html(msg);
             },
         });
     });
