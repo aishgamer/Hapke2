@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt, pandas as pd, numpy as np
 from hapke2 import app
 from hapke2.cerebrum import utils, datainsights as di, preprocess as pp
 
-global wsdata, df, df_raw, n_wave,n_refl, min_wave, max_wave
+global wsdata, df, df_raw, n_wave,n_refl, min_wave, max_wave, dqp
 dq_insights_file = os.path.join(app.instance_path, 'ref_files', 'dq_insights.csv')
 
 wsdata = []
@@ -42,7 +42,7 @@ def print_figure(fig):
 ###############################################################################################
 
 def read_input():
-    global wsdata, df, df_raw, n_wave, n_refl, min_wave, max_wave
+    global wsdata, df, df_raw, n_wave, n_refl, min_wave, max_wave, dqp
     wsdata = []
     figOb, axOb = begin_fig([6,4])
     inp_file = os.path.join(app.instance_path, 'user_files', 'input_file.txt')
@@ -69,6 +69,8 @@ def read_input():
     dq_results.append({'dp':'Data Quality on Opp. Surge', 'rslt':dqp['opp_surge_scenario']})
     dq_results.append({'dp':'Data Quality on Shadow Hiding - Bs', 'rslt':dqp['ext_bs_scenario']})
     dq_results.append({'dp':'Data Quality on Coherence Ratio - Bc', 'rslt':dqp['ext_coh_ratio_scenario']})
+    dq_results.append({'dp':'Data Quality on Phase Angle Coverage (Need more than 27 percent filled)', 'rslt':dqp['g_covg']})
+    dq_results.append({'dp':'Preprocess: Can crop?', 'rslt':dqp['scene'].pp_crop.values[0]})
     dq_results.append({'dp':'Total Unique i,e,g combinations', 'rslt':dqp['all_angles_cnt']})
     dq_results.append({'dp':'Data Process Satus Reccommendation', 'rslt':dqp['process_status']})
 
@@ -94,30 +96,37 @@ def check_dq(df, dq_insights_file):
     return df, dqp, n_wave, n_refl, i_array, e_array, g_array, min_wave, max_wave
 
 def preprocess(fdata):
-    global wsdata, df, df_raw, n_wave, n_refl, min_wave, max_wave
+    global wsdata, df, df_raw, n_wave, n_refl, min_wave, max_wave, dqp
     figOb_pp, axOb_pp = begin_fig([5,4])
     crop_min = min_wave
     crop_max = max_wave
     df = pp.init_process(df)
     df = pp.add_macro_surface_roughness(df)
+    df_raw = df.copy(deep=True)
 
-    if fdata['crop']=='on':
+    if fdata['crop']=='on' and dqp['scene'].pp_crop.values[0]=='yes':
         crop_min_inp = fdata['pp_crop_min_input']
         crop_max_inp = fdata['pp_crop_max_input']
         crop_min = min_wave if crop_min_inp is None or crop_min_inp == '' else float(crop_min_inp)
         crop_max = max_wave if crop_max_inp is None or crop_max_inp == '' else float(crop_max_inp)
         i1, i2 = utils.find_nearest(n_wave, crop_min), utils.find_nearest(n_wave, crop_max)
 
-        n_wave = n_wave[i1:i2+1]
-        min_wave, max_wave = n_wave.min(), n_wave.max()
+        # Copy to new n_wave - leave original as is....
+        # For wave with no repeats - all the repeats are taken
+        n_wave_pp = n_wave[i1:i2+1]
+        min_wave, max_wave = n_wave_pp.min(), n_wave_pp.max()
         df = df[(df.wave>=min_wave)&(df.wave<=max_wave)]
     else:
-        pass 
+        n_wave_pp = n_wave 
 
     df, dqp, n_wave, n_refl, i_array, e_array, g_array, min_wave, max_wave = check_dq(df, dq_insights_file)
 
     df.plot('wave', 'refl','scatter', ax=axOb_pp, figsize=(5,4), fontsize=7, xlabel='wave(nm)')
     pImage =  print_figure(figOb_pp)
+
+    #######################
+    # ieg not the same - sets of data in reflectance vs wavelength at each i/e/g
+    # each set is downsampled the same way
 
     # Load Workspace
     wsdata.append({'var':'wave', 'value': n_wave.shape[0], 'min':round(min_wave,2), 'max':round(max_wave,2)})
@@ -134,10 +143,12 @@ def preprocess(fdata):
     dq_results.append({'dp':'Data Quality on Opp. Surge', 'rslt':dqp['opp_surge_scenario']})
     dq_results.append({'dp':'Data Quality on Shadow Hiding - Bs', 'rslt':dqp['ext_bs_scenario']})
     dq_results.append({'dp':'Data Quality on Coherence Ratio - Bc', 'rslt':dqp['ext_coh_ratio_scenario']})
+    dq_results.append({'dp':'Data Quality on Phase Angle Coverage (Need more than 27 percent filled)', 'rslt':dqp['g_covg']})
+    dq_results.append({'dp':'Preprocess: Can crop?', 'rslt':dqp['scene'].pp_crop.values[0]})
     dq_results.append({'dp':'Total Unique i,e,g combinations', 'rslt':dqp['all_angles_cnt']})
     dq_results.append({'dp':'Data Process Satus Reccommendation', 'rslt':dqp['process_status']})
 
-    jres = {'min_wave':min_wave, 'max_wave':max_wave,'img':pImage, 'wsdata':wsdata,
-            'dq_str':dqp['message'],'dq_results':dq_results}
+    jres = {'img':pImage, 'wsdata':wsdata, 'dq_str':dqp['message'],'dq_results':dq_results, 'guess_permission':dqp['process_status']}
     
     return jsonify(jres)
+

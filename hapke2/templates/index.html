@@ -102,31 +102,68 @@
                 <div class="row">
                     <div class="col-sm">
                         <div class="form-group row">
-                            <label for="hpk_bs0" class="col-sm-6 col-form-label">Shadow Hiding (Bs0):</label>
-                            <div class="col-sm-4">
-                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_bs0_low" name="hpk_bs0_low" min=1>
-                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_bs0_high" name="hpk_bs0_high" min=1>
-
+                            <label for="hpk_bs0" class="col-sm-6 col-form-label">Single Scattering Albedo (W):</label>
+                            <div class="col-sm-4 input-group">
+                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_w_guess" placeholder="W Guess" name="hpk_w_guess" min=0 max=1>
+                                <span class="input-group-addon">-</span>
+                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_w_low" placeholder="W Low" name="hpk_w_low" min=0 max=1>
+                                <span class="input-group-addon">-</span>
+                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_w_high" placeholder="W High" name="hpk_w_high" min=0 max=1>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="hpk_bc0" class="col-sm-6 col-form-label">Coherence (Bc0):</label>
-                            <div class="col-sm-4">
-                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_bc0_low" name="hpk_bc0_low" min=1>
-                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_bc0_high" name="hpk_bc0_high" min=1>
-
+                            <label for="hpk_bs0" class="col-sm-6 col-form-label">SHOE Amplitude (B_s0):</label>
+                            <div class="col-sm-4 input-group">
+                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_bs0_guess" placeholder="B_s0 Guess" name="hpk_bs0_guess" min=0 max=1>
+                                <span class="input-group-addon">-</span>
+                                <input class="form-control form-control-sm d-inline lh_guess" type="number" id="hpk_bs0_low" placeholder="B_s0 Low" name="hpk_bs0_low" min=0 max=1>
+                                <span class="input-group-addon">-</span>
+                                <input class="form-control form-control-sm d-inline lh_guess" type="number" id="hpk_bs0_high" placeholder="B_s0 High" name="hpk_bs0_high" min=0 max=1>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="hpk_theta" class="col-sm-6 col-form-label">Surface Roughness:</label>
-                            <div class="col-sm-4">
-                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_theta_low" name="hpk_theta_low" min="1">
-                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_theta_high" name="hpk_theta_high" min="1">
+                            <label for="hpk_hs" class="col-sm-6 col-form-label">SHOW Width (h_s):</label>
+                            <div class="col-sm-4 input-group">
+                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_hs_guess" placeholder="h_s Guess" name="hpk_hs_guess" min=0 max=1>
+                                <span class="input-group-addon">-</span>
+                                <input class="form-control form-control-sm d-inline lh_guess" type="number" id="hpk_hs_low" name="hpk_hs_low" placeholder="h_s Low" min=0 max=1>
+                                <span class="input-group-addon">-</span>
+                                <input class="form-control form-control-sm d-inline lh_guess" type="number" id="hpk_hs_high" placeholder="h_s High" name="hpk_hs_high" min=0 max=1>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="hpk_bc0" class="col-sm-6 col-form-label">CBOE Amplitude (Bc_0):</label>
+                            <div class="col-sm-4 input-group">
+                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_bs0_guess" placeholder="B_c0 Guess" name="hpk_bc0_guess" min=0 max=1>
+                                <span class="input-group-addon">-</span>
+                                <input class="form-control form-control-sm d-inline lh_guess" type="number" id="hpk_bc0_low" placeholder="B_c0 Low" name="hpk_bc0_low" min=0 max=1>
+                                <span class="input-group-addon">-</span>
+                                <input class="form-control form-control-sm d-inline lh_guess" type="number" id="hpk_bc0_high" placeholder="B_c0 High" name="hpk_bc0_high" min=0 max=1>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="hpk_hc" class="col-sm-6 col-form-label">CBOE Width (h_c):</label>
+                            <div class="col-sm-4 input-group">
+                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_hc_guess" placeholder="h_c Guess" name="hpk_hc_guess" min=0 max=1>
+                                <span class="input-group-addon">-</span>
+                                <input class="form-control form-control-sm d-inline lh_guess" type="number" id="hpk_hc_low" name="hpk_hc_low" placeholder="h_c Low" min=0 max=1>
+                                <span class="input-group-addon">-</span>
+                                <input class="form-control form-control-sm d-inline lh_guess" type="number" id="hpk_hc_high" placeholder="h_c High" name="hpk_hc_high" min=0 max=1>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm">
                         <div class="form-group row">
+                            <label for="hpk_pfn" class="col-sm-6 col-form-label">Phase Function (Click to Select):</label>
+                            <div class="col-sm-4 input-group">
+                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_pfn_guess" placeholder="Contant (1)" name="hpk_pfn_guess" min=0 max=1>
+                                <span class="input-group-addon">-</span>
+                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_pfn_low" name="hpk_pfn_low" placeholder="H(g)" min=0 max=1>
+                                <span class="input-group-addon">-</span>
+                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_pfn_high" placeholder="Legendre" name="hpk_pfn_high" min=0 max=1>
+                            </div>
+                        </div>
+                        <!-- <div class="form-group row">
                             <label class="col-sm-6 col-form-label" for="hpk_pg">P(g)</label>
                             <div class="col-sm-4">
                                 <select class="custom-select" id="hpk_pg">
@@ -136,11 +173,45 @@
                                     <option value="leg">Legendre</option>
                                 </select>
                             </div>
+                        </div> -->
+                        <div class="form-group row">
+                            <label for="hpk_b" class="col-sm-6 col-form-label">B:</label>
+                            <div class="col-sm-4 input-group">
+                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_b_guess" placeholder="B Guess" name="hpk_b_guess" min=0 max=1>
+                                <span class="input-group-addon">-</span>
+                                <input class="form-control form-control-sm d-inline lh_guess" type="number" id="hpk_b_low" name="hpk_b_low" placeholder="B Low" min=0 max=1>
+                                <span class="input-group-addon">-</span>
+                                <input class="form-control form-control-sm d-inline lh_guess" type="number" id="hpk_b_high" placeholder="B High" name="hpk_b_high" min=0 max=1>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="hpk_c" class="col-sm-6 col-form-label">C:</label>
+                            <div class="col-sm-4 input-group">
+                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_c_guess" placeholder="C Guess" name="hpk_c_guess" min=0 max=1>
+                                <span class="input-group-addon">-</span>
+                                <input class="form-control form-control-sm d-inline lh_guess" type="number" id="hpk_c_low" name="hpk_c_low" placeholder="C Low" min=0 max=1>
+                                <span class="input-group-addon">-</span>
+                                <input class="form-control form-control-sm d-inline lh_guess" type="number" id="hpk_c_high" placeholder="C High" name="hpk_c_high" min=0 max=1>
+                            </div>
                         </div>
                         <div class="form-group row">
                             <label for="hpk_ff" class="col-sm-6 col-form-label">Filling Factor:</label>
-                            <div class="col-sm-4">
-                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_ff" name="hpk_ff" min=1>
+                            <div class="col-sm-4 input-group">
+                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_ff_guess" placeholder="ff Guess" name="hpk_ff_guess" min=0 max=1>
+                                <span class="input-group-addon">-</span>
+                                <input class="form-control form-control-sm d-inline lh_guess" type="number" id="hpk_ff_low" name="hpk_ff_low" placeholder="ff Low" min=0 max=1>
+                                <span class="input-group-addon">-</span>
+                                <input class="form-control form-control-sm d-inline lh_guess" type="number" id="hpk_ff_high" placeholder="ff High" name="hpk_ff_high" min=0 max=1>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="hpk_theta" class="col-sm-6 col-form-label">Surface Roughness (S):</label>
+                            <div class="col-sm-4 input-group">
+                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_theta_guess" placeholder="Theta Bar Guess" name="hpk_theta_guess" min=0 max=1>
+                                <span class="input-group-addon">-</span>
+                                <input class="form-control form-control-sm d-inline lh_guess" type="number" id="hpk_theta_low" name="hpk_theta_low" placeholder="Theta Bar Low" min=0 max=1>
+                                <span class="input-group-addon">-</span>
+                                <input class="form-control form-control-sm d-inline lh_guess" type="number" id="hpk_theta_high" placeholder="Theta Bar High" name="hpk_theta_high" min=0 max=1>
                             </div>
                         </div>
                     </div>

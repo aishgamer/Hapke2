@@ -29,7 +29,7 @@ $(document).ready(function () {
 
                 // For next section - setting defaults
                 $('#minValdp').text(data.min_wave);
-                $('#maxValdp').text(data.max_wave)
+                $('#maxValdp').text(data.max_wave);
                 $('#pp_crop_min_input').attr({ 'min': data.min_wave, 'max': data.max_wave - 100 })
                 $('#pp_crop_max_input').attr({ 'min': data.min_wave + 100, 'max': data.max_wave })
                 var msg = 
@@ -60,6 +60,14 @@ $(document).ready(function () {
                 var msg = 
                 'Data Quality - All:'+ data.dq_str + '.'
                 $('#pp_message').html(msg);
+
+                // For next section - enabling disabling fields
+                if(data.guess_permission == 'red'){
+                    $('.lh_guess').prop('disabled', true);
+                }
+                else{
+                    $('.lh_guess').prop('disabled', false);
+                }
             },
         });
     });

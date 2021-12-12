@@ -80,6 +80,7 @@ def get_data_quality(df, lkp_file):
     ext_coh_ratio_scenario = 'Sufficient Data for Coherence Ratio' if g_cnt_bc_rng_1 >=1 else 'Insufficient Data points for Coherence Ratio'
 
     ## Find Phase Angle Extended Scenario
+    ## Display it as Phase Angle Coverage: More than 27% filled, or not filled
     ## Ask Eli How to Display
     is_g_suff = True 
     wave_pass_dict = {}
@@ -94,6 +95,8 @@ def get_data_quality(df, lkp_file):
         wave_pass_dict[w] = (wave_pass,bkt_set)
         is_g_suff = is_g_suff & wave_pass
 
+    # Now cut by ieg - check for minimum of 10 points and also all cuts must have same points
+    # This decides smoothening and downsample
 
     # Load the Insights File
     lkp = pd.read_csv(lkp_file)
@@ -102,6 +105,6 @@ def get_data_quality(df, lkp_file):
     dstat = scene.process_status.values[0]
 
     # Dictionary Keys will be used in Display on the Webpage
-    di_pkg = {'wave_count':w_cnt, 'wave_scenario':wave_scenario,'i_count':i_cnt, 'incident_angle_scenario':incident_angle_scenario, 'e_count':e_cnt, 'emmission_angle_scenario':emmission_angle_scenario, 'g_count':g_cnt, 'phase_angle_scenario':phase_angle_scenario, 'all_angles_cnt':all_angles_cnt, 'opp_surge_count':opp_surge_cnt, 'opp_surge_scenario':opp_surge_scenario, 'message':dq_msg, 'process_status':dstat, 'ext_coh_ratio_scenario':ext_coh_ratio_scenario, 'ext_bs_scenario':ext_bs_scenario}
+    di_pkg = {'wave_count':w_cnt, 'wave_scenario':wave_scenario,'i_count':i_cnt, 'incident_angle_scenario':incident_angle_scenario, 'e_count':e_cnt, 'emmission_angle_scenario':emmission_angle_scenario, 'g_count':g_cnt, 'phase_angle_scenario':phase_angle_scenario, 'all_angles_cnt':all_angles_cnt, 'opp_surge_count':opp_surge_cnt, 'opp_surge_scenario':opp_surge_scenario, 'message':dq_msg, 'process_status':dstat, 'ext_coh_ratio_scenario':ext_coh_ratio_scenario, 'ext_bs_scenario':ext_bs_scenario,'g_covg':is_g_suff,'scene':scene}
 
     return di_pkg
