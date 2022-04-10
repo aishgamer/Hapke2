@@ -117,18 +117,18 @@ def get_data_quality(df, lkp_file):
     # wave_unique: w1,w2,w3,w4 || df_t collects each wavelength block temporarily
     # df_t (dataframe_temp): [w1,w1,w1] | 2nd iter: [w2,w2,w2]........
     # It checks for unique phase angle in each wavelength
-    for w in wave_unique:
-        df_t = df[df.wave==w]
+    for w in wave_unique: #w1
+        df_t = df[df.wave==w] 
         g_ = df_t.g.unique()
         bkt_list = []
         # Split the dataset in buckets of range 10 degrees
         # 180 degrees - in ranges of 10 is 18 buckets
         # 27% filled of 18 is rounded to 5
         for gg in g_:
-            bkt_list.append(gg//10)
-        bkt_set = set(bkt_list)
+            bkt_list.append(gg//10) #[1,1,2,2,3,4,5]
+        bkt_set = set(bkt_list) #(1,2,3,4,5)
         wave_pass = len(bkt_set)>=5 
-        wave_pass_dict[w] = (wave_pass,bkt_set)
+        wave_pass_dict[w] = (wave_pass,bkt_set) # building the dictionary
         is_g_suff = is_g_suff & wave_pass
 
     # Now cut by ieg - check for minimum of 10 points and also all cuts must have same points
@@ -141,10 +141,15 @@ def get_data_quality(df, lkp_file):
     # The processing status determines the valid input values that are enabled on the Front-End Webpage
     lkp = pd.read_csv(lkp_file)
     scene = lkp[(lkp.wave_scenario==wave_scenario) & (lkp.all_angles_cnt==all_angles_cnt) & (lkp.incident_angle_scenario==incident_angle_scenario) & (lkp.emmission_angle_scenario==emmission_angle_scenario) & (lkp.phase_angle_scenario==phase_angle_scenario) & (lkp.opp_surge_scenario==opp_surge_scenario)]
-    dq_msg = scene.data_insights.values[0]
+    dq_msg = scene.data_insights.values[0] #('impossible',)
     dstat = scene.process_status.values[0]
 
     # Dictionary Keys will be used in Display on the Webpage
     di_pkg = {'wave_count':w_cnt, 'wave_scenario':wave_scenario,'i_count':i_cnt, 'incident_angle_scenario':incident_angle_scenario, 'e_count':e_cnt, 'emmission_angle_scenario':emmission_angle_scenario, 'g_count':g_cnt, 'phase_angle_scenario':phase_angle_scenario, 'all_angles_cnt':all_angles_cnt, 'opp_surge_count':opp_surge_cnt, 'opp_surge_scenario':opp_surge_scenario, 'message':dq_msg, 'process_status':dstat, 'ext_coh_ratio_scenario':ext_coh_ratio_scenario, 'ext_bs_scenario':ext_bs_scenario,'g_covg':is_g_suff,'scene':scene}
 
     return di_pkg
+
+# list [] - list of values
+# tuple () combination of variables | list of tuples
+# set ()  list of unique values
+# dict {} - key: value -- string/integer {} - array['key'] key integer, values : set, list, tuple, value
