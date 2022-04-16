@@ -21,7 +21,7 @@ $(document).ready(function () {
             processData: false,
             success: function (data) {
                 $('#wstable').bootstrapTable('removeAll');
-                $('#input_results').empty().append(data.img);
+                //$('#input_results').empty().append(data.img);
                 $('#wstable').bootstrapTable('load', data.wsdata).show();
 
                 $('#dqtable').bootstrapTable('removeAll');
@@ -35,8 +35,20 @@ $(document).ready(function () {
                 var msg = 
                 'Data Quality - All:'+ data.dq_str + '.'
                 $('#input_message').html(msg);
+                
+                //Plotly Data
+                var json_plt_data = [{
+                    opacity:0.5,
+                    type: 'scatter3d',
+                    x: data.plot_data.wave,
+                    y: data.plot_data.refl,
+                    z: data.plot_data.g
+                }];
+                var layout = {title: "Input Data"};
+                Plotly.newPlot("input_results", json_plt_data, layout);
             },
         });
+
     });
 
     $("#pp_submit").click(function () {

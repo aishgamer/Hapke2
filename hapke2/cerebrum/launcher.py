@@ -3,6 +3,10 @@ from io import BytesIO
 from scipy.signal import savgol_filter
 from flask import Flask, jsonify
 import matplotlib.pyplot as plt, pandas as pd, numpy as np
+from matplotlib import cm
+import json
+import plotly
+import plotly.express as px
 from hapke2 import app
 from hapke2.cerebrum import utils, datainsights as di, preprocess as pp
 
@@ -23,9 +27,12 @@ def hello():
     data = base64.b64encode(buf.getbuffer()).decode("ascii")
     return jsonify(f"<img src='data:image/png;base64,{data}'/>")
 
-def begin_fig(size):
-    fig = plt.figure(figsize=size)
-    ax = fig.subplots()
+def begin_fig(size, dim=2):
+    if dim==2:
+        fig = plt.figure(figsize=size)
+        ax = fig.subplots()
+    else:
+        fig, ax = plt.subplots(figsize=size,subplot_kw={"projection": "3d"})
     return fig, ax
 
 def print_figure(fig):
@@ -44,15 +51,24 @@ def print_figure(fig):
 def read_input():
     global wsdata, df, df_raw, n_wave, n_refl, min_wave, max_wave, dqp
     wsdata = []
-    figOb, axOb = begin_fig([6,4])
+    
     inp_file = os.path.join(app.instance_path, 'user_files', 'input_file.txt')
     df = pd.read_csv(inp_file, header=None, delimiter = "\s", names=['wave','refl','i','e','g'])
     df_raw = df.copy(deep=True)
 
     df, dqp, n_wave, n_refl, i_array, e_array, g_array, min_wave, max_wave = check_dq(df, dq_insights_file)
 
-    df.plot('wave', 'refl','scatter', ax=axOb, figsize=(5,4), fontsize=7, xlabel='wave(nm)')
-    pImage =  print_figure(figOb)
+    # Matplotlib -- version (2d,3d works)
+    # figOb, axOb = begin_fig([6,4],3)
+    # df.plot('wave', 'refl','scatter', ax=axOb, figsize=(5,4), fontsize=7, xlabel='wave(nm)')
+    # pImage =  print_figure(figOb)
+
+    # Try 3d plot
+    # axOb.scatter(df.wave.values, df.refl.values, df.g.values, cmap=cm.coolwarm, linewidth=0, antialiased=False)
+    # axOb.set_xlabel('wave')
+    # axOb.set_ylabel('refl')
+    # axOb.set_zlabel('phase angle')
+    # pImage =  print_figure(figOb)
 
     # Load Workspace
     wsdata.append({'var':'wave', 'value': n_wave.shape[0], 'min':round(min_wave,2), 'max':round(max_wave,2)})
@@ -74,10 +90,13 @@ def read_input():
     dq_results.append({'dp':'Total Unique i,e,g combinations', 'rslt':dqp['all_angles_cnt']})
     dq_results.append({'dp':'Data Process Satus Reccommendation', 'rslt':dqp['process_status']})
 
-    jres = {'min_wave':min_wave, 'max_wave':max_wave,'img':pImage, 'wsdata':wsdata,
-            'dq_str':dqp['message'],'dq_results':dq_results}
+    plot_data = {'wave': df.wave.values.tolist(), 'refl': df.refl.values.tolist(), 'g': df.g.values.tolist()}
+    jres = {'min_wave':min_wave, 'max_wave':max_wave, 'wsdata':wsdata,
+            'dq_str':dqp['message'],'dq_results':dq_results, 'plot_data':plot_data}
     
-    return jsonify(jres)
+    ret_rslt = jsonify(jres)
+    return ret_rslt
+
 
 def check_dq(df, dq_insights_file):
     #Add hash
