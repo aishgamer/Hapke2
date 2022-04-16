@@ -21,7 +21,7 @@ $(document).ready(function () {
             processData: false,
             success: function (data) {
                 $('#wstable').bootstrapTable('removeAll');
-                //$('#input_results').empty().append(data.img);
+                $('#input_results_sciplot').empty().append(data.img);
                 $('#wstable').bootstrapTable('load', data.wsdata).show();
 
                 $('#dqtable').bootstrapTable('removeAll');
@@ -44,11 +44,23 @@ $(document).ready(function () {
                     y: data.plot_data.refl,
                     z: data.plot_data.g
                 }];
-                var layout = {title: "Input Data"};
+                var layout = {title: "Input Data",
+                scene: {
+                    xaxis:{title: 'Wavelength'},
+                    yaxis:{title: 'Reflectance'},
+                    zaxis:{title: 'Phase Angle'},
+                    },
+                };
                 Plotly.newPlot("input_results", json_plt_data, layout);
             },
         });
 
+    });
+
+    $('.fnshowbtn').click(function(){
+        $('.fnsection').hide();
+        var sec_id = $(this).attr('d-id');
+        $('#'+sec_id).show();
     });
 
     $("#pp_submit").click(function () {

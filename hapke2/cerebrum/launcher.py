@@ -64,11 +64,12 @@ def read_input():
     # pImage =  print_figure(figOb)
 
     # Try 3d plot
-    # axOb.scatter(df.wave.values, df.refl.values, df.g.values, cmap=cm.coolwarm, linewidth=0, antialiased=False)
-    # axOb.set_xlabel('wave')
-    # axOb.set_ylabel('refl')
-    # axOb.set_zlabel('phase angle')
-    # pImage =  print_figure(figOb)
+    figOb, axOb = begin_fig([6,4],3)
+    axOb.scatter(df.wave.values, df.refl.values, df.g.values, cmap=cm.coolwarm, linewidth=0, antialiased=False)
+    axOb.set_xlabel('wave')
+    axOb.set_ylabel('refl')
+    axOb.set_zlabel('phase angle')
+    pImage =  print_figure(figOb)
 
     # Load Workspace
     wsdata.append({'var':'wave', 'value': n_wave.shape[0], 'min':round(min_wave,2), 'max':round(max_wave,2)})
@@ -91,7 +92,7 @@ def read_input():
     dq_results.append({'dp':'Data Process Satus Reccommendation', 'rslt':dqp['process_status']})
 
     plot_data = {'wave': df.wave.values.tolist(), 'refl': df.refl.values.tolist(), 'g': df.g.values.tolist()}
-    jres = {'min_wave':min_wave, 'max_wave':max_wave, 'wsdata':wsdata,
+    jres = {'min_wave':min_wave, 'max_wave':max_wave, 'wsdata':wsdata, 'img':pImage,
             'dq_str':dqp['message'],'dq_results':dq_results, 'plot_data':plot_data}
     
     ret_rslt = jsonify(jres)
