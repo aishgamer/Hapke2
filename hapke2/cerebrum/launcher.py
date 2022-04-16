@@ -56,6 +56,8 @@ def read_input():
     df = pd.read_csv(inp_file, header=None, delimiter = "\s", names=['wave','refl','i','e','g'])
     df_raw = df.copy(deep=True)
 
+    df = pp.nanometer_conversion(df)
+
     df, dqp, n_wave, n_refl, i_array, e_array, g_array, min_wave, max_wave = check_dq(df, dq_insights_file)
 
     # Matplotlib -- version (2d,3d works)
