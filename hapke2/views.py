@@ -38,13 +38,12 @@ def session_input():
 
 @app.route('/input_upload',methods=[ "GET",'POST'])
 def input_upload_file():
-    print(request.files)
     isthisFile=request.files.get('file')
     filename = 'input_file.txt'
     isthisFile.save(os.path.join(app.instance_path, 'user_files', secure_filename(filename)))
     web_response = dfr.read_input()
     return web_response
-
+    
 @app.route('/input_preprocess',methods=['GET','POST'])
 def input_preprocess():
     fdata = request.form

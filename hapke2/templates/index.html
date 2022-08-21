@@ -6,6 +6,7 @@
     <h5 class="card-header">Input</h5>
     <div class="card-body text-center">
         <div id="input_results" class="my-4"></div>
+        <div id="input_results_sciplot" class="my-4"></div>
         <div id="input_message" class="my-4 text-left"></div>
         <div class="input_dq_results my-4">
             <table id="dqtable" class="dqtable" data-toggle="table">
@@ -95,7 +96,12 @@
 
 <div class="row card my-2" id="section_fn">
     <h5 class="card-header">Function</h5>
-    <div class="card-body">
+    <div id="decision_section" class="card-body">
+        <div class="btn btn-sm btn-hhanh-primary fnshowbtn my-4" d-id="schkuratov_section">Function Schkuratov</div>
+        <div class="btn btn-sm btn-hhanh-primary fnshowbtn my-4" d-id="hapke_section">Function Hapke</div>
+    </div>
+    <div id="schkuratov_section" class="fnsection card-body" style="display:none"> Schkuratov</div>
+    <div id="hapke_section" class="fnsection card-body" style="display:none">
         <div>Hapke Model</div>
         <form id="pp_form">
             <div class="container">
@@ -151,16 +157,36 @@
                                 <input class="form-control form-control-sm d-inline lh_guess" type="number" id="hpk_hc_high" placeholder="h_c High" name="hpk_hc_high" min=0 max=1>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="hpk_theta" class="col-sm-6 col-form-label">Surface Roughness (S):</label>
+                            <div class="col-sm-4 input-group">
+                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_theta_guess" placeholder="Theta Bar Guess" name="hpk_theta_guess" min=0 max=1>
+                                <span class="input-group-addon">-</span>
+                                <input class="form-control form-control-sm d-inline lh_guess" type="number" id="hpk_theta_low" name="hpk_theta_low" placeholder="Theta Bar Low" min=0 max=1>
+                                <span class="input-group-addon">-</span>
+                                <input class="form-control form-control-sm d-inline lh_guess" type="number" id="hpk_theta_high" placeholder="Theta Bar High" name="hpk_theta_high" min=0 max=1>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-sm">
                         <div class="form-group row">
                             <label for="hpk_pfn" class="col-sm-6 col-form-label">Phase Function (Click to Select):</label>
                             <div class="col-sm-4 input-group">
-                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_pfn_guess" placeholder="Contant (1)" name="hpk_pfn_guess" min=0 max=1>
-                                <span class="input-group-addon">-</span>
-                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_pfn_low" name="hpk_pfn_low" placeholder="H(g)" min=0 max=1>
-                                <span class="input-group-addon">-</span>
-                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_pfn_high" placeholder="Legendre" name="hpk_pfn_high" min=0 max=1>
+                                <div class="col-sm-6 d-inline">
+                                    <select class="custom-select"  style="width:100% !important" id="hpk_pg">
+                                        <option selected>Data</option>
+                                        <option value="pd">Phase Data</option>
+                                        <option value="pupld">Upload</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 d-inline">
+                                    <select class="custom-select"  style="width:100% !important" id="hpk_pg">
+                                        <option selected>Choose...</option>
+                                        <option value="1">Constant</option>
+                                        <option value="hg">H(g)</option>
+                                        <option value="leg">Legendre</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <!-- <div class="form-group row">
@@ -174,6 +200,22 @@
                                 </select>
                             </div>
                         </div> -->
+                        <div class="form-group row">
+                            <label for="hpk_phase" class="col-sm-6 col-form-label">Upload Phase:</label>
+                            <div class="col-sm-4 input-group">
+                                <form id="phase-upload-file">
+                                    <input name="customFile" class="form-control form-control-sm d-inline" id="phase_input_file" type="file">
+                                </form>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="hpk_phase" class="col-sm-6 col-form-label">Upload B/C:</label>
+                            <div class="col-sm-4 input-group">
+                                <form id="bc-upload-file">
+                                    <input name="customFile" class="form-control form-control-sm d-inline" id="bc_input_file" type="file">
+                                </form>
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label for="hpk_b" class="col-sm-6 col-form-label">B:</label>
                             <div class="col-sm-4 input-group">
@@ -204,16 +246,7 @@
                                 <input class="form-control form-control-sm d-inline lh_guess" type="number" id="hpk_ff_high" placeholder="ff High" name="hpk_ff_high" min=0 max=1>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="hpk_theta" class="col-sm-6 col-form-label">Surface Roughness (S):</label>
-                            <div class="col-sm-4 input-group">
-                                <input class="form-control form-control-sm d-inline" type="number" id="hpk_theta_guess" placeholder="Theta Bar Guess" name="hpk_theta_guess" min=0 max=1>
-                                <span class="input-group-addon">-</span>
-                                <input class="form-control form-control-sm d-inline lh_guess" type="number" id="hpk_theta_low" name="hpk_theta_low" placeholder="Theta Bar Low" min=0 max=1>
-                                <span class="input-group-addon">-</span>
-                                <input class="form-control form-control-sm d-inline lh_guess" type="number" id="hpk_theta_high" placeholder="Theta Bar High" name="hpk_theta_high" min=0 max=1>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
         </form>

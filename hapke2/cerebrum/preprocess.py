@@ -6,6 +6,11 @@ def init_process(df):
 
     return df
 
+def nanometer_conversion(df):
+    if df.wave.mean() < 10:
+        df.wave = df.wave * 1000
+    return df
+
 def add_macro_surface_roughness(df):
     #after converting to radians deg2rad(i,e,g)
     #calculate quantites for later
