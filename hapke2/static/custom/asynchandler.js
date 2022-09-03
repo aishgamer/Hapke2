@@ -41,15 +41,26 @@ $(document).ready(function () {
                     opacity:0.5,
                     type: 'scatter3d',
                     x: data.plot_data.wave,
-                    y: data.plot_data.refl,
-                    z: data.plot_data.g
+                    y: data.plot_data.g,
+                    z: data.plot_data.refl,
+                    mode: 'markers',
+                    marker: {
+                        color: 'rgb(127, 127, 127)',
+                        size: 3,
+                        symbol: 'circle',
+                        line: {
+                        color: 'rgb(204, 204, 204)',
+                        width: 1},
+                        opacity: 0.8}
                 }];
+                
                 var layout = {title: "Input Data",
                 scene: {
                     xaxis:{title: 'Wavelength'},
-                    yaxis:{title: 'Reflectance'},
-                    zaxis:{title: 'Phase Angle'},
+                    yaxis:{title: 'Phase Angle'},
+                    zaxis:{title: 'Reflectance'}
                     },
+                margin: {l: 0, r: 0, b: 0,t: 0}                
                 };
                 Plotly.newPlot("input_results", json_plt_data, layout);
             },
